@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Blacai" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/primary_dark</item>
+        <item name="android:colorPrimary">@color/accent</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <!-- For AppCompat, but we use Compose, so these are mostly for legacy -->
+    </style>
+
+    <!-- Splash theme (optional) -->
+    <style name="Theme.Blacai.Splash" parent="Theme.Blacai">
+        <item name="android:windowBackground">@drawable/ic_launcher</item>
+    </style>
+</resources>
