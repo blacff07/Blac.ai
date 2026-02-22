@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+// Keep colors only here
 private val primaryDark = Color(0xFF1E1E2F)
 private val secondaryDark = Color(0xFF2D2D3A)
 private val accent = Color(0xFF7C4DFF)
