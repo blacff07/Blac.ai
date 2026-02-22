@@ -3,9 +3,10 @@ package com.blac.ai.repository
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.blac.ai.BuildConfig
+import com.blac.ai.data.ToggleOptions  // 👈 ADD THIS IMPORT
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.GenerationConfig
-import com.google.ai.client.generativeai.type.content
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
