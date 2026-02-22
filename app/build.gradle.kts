@@ -57,6 +57,8 @@ android {
         }
         exclude(group = "org.jetbrains", module = "annotations-java5")
         exclude(group = "com.google.guava", module = "listenablefuture")
+        // This correctly excludes the duplicate annotations from prism4j-bundler
+        exclude(group = "io.noties", module = "prism4j-annotations")
     }
 }
 
