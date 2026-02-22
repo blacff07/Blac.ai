@@ -46,18 +46,15 @@ android {
     }
     
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
+        kotlinCompilerExtensionVersion = "1.5.11" // Compatible with Kotlin 1.9.23
     }
     
     // Fix duplicate class conflicts
     configurations.all {
         resolutionStrategy {
-            // Force specific versions for conflicting libraries
             force("org.jetbrains:annotations:23.0.0")
             force("com.google.guava:guava:32.0.1-android")
         }
-        
-        // Explicitly exclude problematic transitive dependencies
         exclude(group = "org.jetbrains", module = "annotations-java5")
         exclude(group = "com.google.guava", module = "listenablefuture")
     }
