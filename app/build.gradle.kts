@@ -46,7 +46,7 @@ android {
     }
     
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11" // Compatible with Kotlin 1.9.23
+        kotlinCompilerExtensionVersion = "1.5.11"
     }
     
     // Fix duplicate class conflicts
@@ -57,9 +57,8 @@ android {
         }
         exclude(group = "org.jetbrains", module = "annotations-java5")
         exclude(group = "com.google.guava", module = "listenablefuture")
-        // Add this to exclude the duplicate annotations from prism4j-bundler
-        exclude(group = "io.noties", module = "prism4j-annotations")
     }
+}
 
 dependencies {
     // Core Android
@@ -86,7 +85,7 @@ dependencies {
     // Vosk offline voice
     implementation("com.alphacephei:vosk-android:0.3.47")
 
-    // Code highlighting - using bundler only (includes prism4j)
+    // Code highlighting
     implementation("io.noties:prism4j:2.0.0")
     implementation("io.noties:prism4j-bundler:2.0.0")
 
