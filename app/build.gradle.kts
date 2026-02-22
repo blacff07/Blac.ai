@@ -30,34 +30,54 @@ android {
             isMinifyEnabled = false
         }
     }
+    
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    
     kotlinOptions {
         jvmTarget = "17"
     }
+    
     buildFeatures {
         compose = true
         buildConfig = true
     }
+    
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
+        kotlinCompilerExtensionVersion = "1.5.11"
+    }
+    
+    // Fix duplicate class conflicts
+    configurations.all {
+        resolutionStrategy {
+            // Force specific versions for conflicting libraries
+            force("org.jetbrains:annotations:23.0.0")
+            force("com.google.guava:guava:32.0.1-android")
+        }
+        
+        // Explicitly exclude problematic transitive dependencies
+        exclude(group = "org.jetbrains", module = "annotations-java5")
+        exclude(group = "com.google.guava", module = "listenablefuture")
     }
 }
 
 dependencies {
+    // Core Android
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
+    
+    // Compose BOM and libraries
     implementation(platform("androidx.compose:compose-bom:2024.04.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.navigation:navigation-compose:2.7.7")  // Added
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 
     // Gemini API
     implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
@@ -68,11 +88,10 @@ dependencies {
     // Vosk offline voice
     implementation("com.alphacephei:vosk-android:0.3.47")
 
-    // Code highlighting
-    implementation("io.noties:prism4j:2.0.0")
+    // Code highlighting - using bundler only (includes prism4j)
     implementation("io.noties:prism4j-bundler:2.0.0")
 
-    // OkHttp for networking (used by Gemini internally, but also for downloads)
+    // OkHttp for networking
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     // Coroutines
