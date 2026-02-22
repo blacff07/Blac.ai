@@ -86,9 +86,8 @@ dependencies {
     implementation("com.alphacephei:vosk-android:0.3.47")
 
     // Code highlighting - using bundler only (includes prism4j)
-    // Replace the current prism4j line with:
-implementation("com.github.noties:prism4j:2.0.0")
-implementation("com.github.noties:prism4j-bundler:2.0.0")
+    implementation("com.github.noties:prism4j:2.0.0")
+    implementation("com.github.noties:prism4j-bundler:2.0.0")
 
     // OkHttp for networking
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
