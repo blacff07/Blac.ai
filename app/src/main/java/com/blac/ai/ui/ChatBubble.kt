@@ -10,10 +10,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -25,17 +22,6 @@ import com.blac.ai.utils.CodeHighlighter
 fun ChatBubble(message: ChatMessage) {
     val isUser = message.isUser
     val highlighter = remember { CodeHighlighter() }
-    
-    // State to track if code has been highlighted
-    var highlightedText by remember(message.content, message.isCode) {
-        mutableStateOf(
-            if (message.isCode) {
-                highlighter.highlight(message.content, message.language)
-            } else {
-                androidx.compose.ui.text.AnnotatedString(message.content)
-            }
-        )
-    }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -51,6 +37,9 @@ fun ChatBubble(message: ChatMessage) {
             shape = RoundedCornerShape(12.dp)
         ) {
             if (message.isCode) {
+                val highlightedText = remember(message.content, message.language) {
+                    highlighter.highlight(message.content, message.language)
+                }
                 Text(
                     text = highlightedText,
                     fontSize = 14.sp,
