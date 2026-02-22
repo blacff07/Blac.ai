@@ -24,7 +24,6 @@ class CodeHighlighter {
         val node = prism4j.grammar(grammar, code)
         val spannable = SpannableString(code)
 
-        // Fixed: Use traditional for loop instead of forEach to avoid ambiguity
         for (i in 0 until node.children().size()) {
             val child = node.children().get(i)
             val color = when (child.type()) {
