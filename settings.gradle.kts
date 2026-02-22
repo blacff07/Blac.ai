@@ -11,7 +11,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // Correct JitPack configuration for Prism4j
         maven {
             url = uri("https://jitpack.io")
         }
