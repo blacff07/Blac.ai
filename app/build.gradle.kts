@@ -54,10 +54,12 @@ android {
         resolutionStrategy {
             force("org.jetbrains:annotations:23.0.0")
             force("com.google.guava:guava:32.0.1-android")
+            // Prioritize prism4j over prism4j-bundler for annotations
+            preferProjectModules()
         }
         exclude(group = "org.jetbrains", module = "annotations-java5")
         exclude(group = "com.google.guava", module = "listenablefuture")
-        // This correctly excludes the duplicate annotations from prism4j-bundler
+        // Exclude the duplicate annotations from prism4j-bundler
         exclude(group = "io.noties", module = "prism4j-annotations")
     }
 }
