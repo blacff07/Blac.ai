@@ -30,41 +30,36 @@ class CodeHighlighter {
             ?: prism4j.grammar("text") ?: return SpannableString(code)
 
         val node = prism4j.tokenize(code, grammar)
-        return highlightNode(node, code)
-    }
-
-    private fun highlightNode(node: Prism4j.Node, code: String): SpannableString {
         val spannable = SpannableString(code)
         
-        fun process(node: Prism4j.Node) {
-            val color = when (node.type()) {
-                "keyword" -> Color.BLUE
-                "string" -> Color.parseColor("#008000")
-                "comment" -> Color.GRAY
-                "function" -> Color.MAGENTA
-                "number" -> Color.RED
-                "operator", "punctuation" -> Color.BLACK
-                else -> null
-            }
-
-            color?.let {
-                spannable.setSpan(
-                    ForegroundColorSpan(it),
-                    node.start(),
-                    node.end(),
-                    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
-
-            // Process children
-            if (node.children() != null) {
-                for (child in node.children()!!) {
-                    process(child)
-                }
-            }
-        }
-        
-        process(node)
+        highlightNode(node, spannable)
         return spannable
+    }
+
+    private fun highlightNode(node: Prism4j.Node, spannable: SpannableString) {
+        // Apply color to current node
+        val color = when (node.type()) {
+            "keyword" -> Color.BLUE
+            "string" -> Color.parseColor("#008000")
+            "comment" -> Color.GRAY
+            "function" -> Color.MAGENTA
+            "number" -> Color.RED
+            "operator", "punctuation" -> Color.DKGRAY
+            else -> null
+        }
+
+        color?.let {
+            spannable.setSpan(
+                ForegroundColorSpan(it),
+                node.start(),
+                node.end(),
+                SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        // Process children recursively
+        node.children()?.forEach { child ->
+            highlightNode(child, spannable)
+        }
     }
 }
