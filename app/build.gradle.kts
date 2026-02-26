@@ -84,8 +84,9 @@ dependencies {
     // Vosk offline voice
     implementation("com.alphacephei:vosk-android:0.3.47")
 
-    // Code highlighting
-    implementation("io.noties:prism4j-bundler:2.0.0")
+    // 🔴 TEMPORARILY REMOVED - Prism4j syntax highlighting
+    // Will be re-added after build is stable
+    // implementation("io.noties:prism4j-bundler:2.0.0")
 
     // OkHttp for networking
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
