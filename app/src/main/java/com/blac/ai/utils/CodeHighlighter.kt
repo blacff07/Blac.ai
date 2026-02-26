@@ -1,65 +1,28 @@
 package com.blac.ai.utils
 
-import android.graphics.Color
 import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
-import io.noties.prism4j.Prism4j
-import io.noties.prism4j.annotations.PrismBundle
-import io.noties.prism4j.bundler.Prism4jBundler
 
-@PrismBundle
+/**
+ * Temporary simplified highlighter that doesn't require external libraries.
+ * 
+ * This version just returns the original text without any syntax coloring.
+ * Syntax highlighting will be added back once the build is stable and
+ * the Prism4j dependency issues are resolved.
+ * 
+ * All other app features (chat, OCR, voice, file upload) continue to work.
+ */
 class CodeHighlighter {
-    private val prism4j: Prism4j
-    private val grammarLocator = Prism4jBundler.create()
-
-    init {
-        prism4j = Prism4j(grammarLocator)
-    }
-
+    
+    /**
+     * Returns the code as a plain SpannableString without any highlighting.
+     * 
+     * @param code The code text to display
+     * @param language The programming language (ignored in this version)
+     * @return SpannableString containing the original code
+     */
     fun highlight(code: String, language: String = ""): SpannableString {
-        val detectedLanguage = when {
-            language.isNotBlank() -> language
-            code.contains("fun ") || code.contains("class ") -> "kotlin"
-            code.contains("def ") || code.contains("import ") -> "python"
-            code.contains("function") || code.contains("var ") -> "javascript"
-            code.contains("public static") -> "java"
-            else -> "text"
-        }
-
-        val grammar = prism4j.grammar(detectedLanguage)
-            ?: prism4j.grammar("text") ?: return SpannableString(code)
-
-        val node = prism4j.tokenize(code, grammar)
-        val spannable = SpannableString(code)
-        
-        highlightNode(node, spannable)
-        return spannable
-    }
-
-    private fun highlightNode(node: Prism4j.Node, spannable: SpannableString) {
-        // Apply color to current node
-        val color = when (node.type()) {
-            "keyword" -> Color.BLUE
-            "string" -> Color.parseColor("#008000")
-            "comment" -> Color.GRAY
-            "function" -> Color.MAGENTA
-            "number" -> Color.RED
-            "operator", "punctuation" -> Color.DKGRAY
-            else -> null
-        }
-
-        color?.let {
-            spannable.setSpan(
-                ForegroundColorSpan(it),
-                node.start(),
-                node.end(),
-                SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        }
-
-        // Process children recursively
-        node.children()?.forEach { child ->
-            highlightNode(child, spannable)
-        }
+        // Simply return the code without any highlighting
+        // This allows the app to build and function while we debug Prism4j
+        return SpannableString(code)
     }
 }
