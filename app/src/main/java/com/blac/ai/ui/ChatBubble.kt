@@ -10,15 +10,24 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.blac.ai.data.ChatMessage
+import com.blac.ai.utils.CodeHighlighter
 
+/**
+ * Chat bubble component that displays a single message.
+ * 
+ * For code messages, it uses a monospaced font.
+ * Syntax highlighting is temporarily disabled while we debug Prism4j.
+ */
 @Composable
 fun ChatBubble(message: ChatMessage) {
     val isUser = message.isUser
+    val highlighter = remember { CodeHighlighter() }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -33,12 +42,25 @@ fun ChatBubble(message: ChatMessage) {
             ),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Text(
-                text = message.content,
-                fontSize = if (message.isCode) 14.sp else 16.sp,
-                fontFamily = if (message.isCode) FontFamily.Monospace else FontFamily.Default,
-                modifier = Modifier.padding(12.dp)
-            )
+            if (message.isCode) {
+                // For code messages, use monospaced font
+                // Syntax highlighting temporarily disabled
+                val displayText = remember(message.content, message.language) {
+                    highlighter.highlight(message.content, message.language).toString()
+                }
+                Text(
+                    text = displayText,
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily.Monospace,
+                    modifier = Modifier.padding(12.dp)
+                )
+            } else {
+                // Regular text messages
+                Text(
+                    text = message.content,
+                    modifier = Modifier.padding(12.dp)
+                )
+            }
         }
     }
 }
