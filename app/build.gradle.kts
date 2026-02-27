@@ -102,10 +102,10 @@ dependencies {
     // ML Kit OCR (lightweight)
     implementation("com.google.mlkit:text-recognition:16.0.1")
 
-    // Vosk offline voice (exclude native libs – will download model at runtime)
-    implementation("com.alphacephei:vosk-android:0.3.47") {
-        exclude(group = "net.java.dev.jna")
-    }
+    // Vosk offline voice
+    implementation("com.alphacephei:vosk-android:0.3.47")
+    // Add JNA for Vosk native support
+    implementation("net.java.dev.jna:jna:5.14.0")
 
     // OkHttp for networking
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
