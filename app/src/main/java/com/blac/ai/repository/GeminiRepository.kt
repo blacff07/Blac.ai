@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.blac.ai.BuildConfig
-import com.blac.ai.data.ToggleOptions  // 👈 ADD THIS IMPORT
+import com.blac.ai.data.ToggleOptions
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.GenerationConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.withTimeout
+import java.io.IOException
 
 class GeminiRepository(private val context: Context) {
     private val prefs by lazy {
@@ -57,8 +60,14 @@ class GeminiRepository(private val context: Context) {
 
         return withContext(Dispatchers.IO) {
             try {
-                val response = model.generateContent(finalPrompt)
-                response.text ?: "No response"
+                withTimeout(30000) { // 30 seconds timeout
+                    val response = model.generateContent(finalPrompt)
+                    response.text ?: "No response"
+                }
+            } catch (e: TimeoutCancellationException) {
+                "Request timed out. Please try again."
+            } catch (e: IOException) {
+                "Network error: ${e.localizedMessage}"
             } catch (e: Exception) {
                 "Error: ${e.localizedMessage}"
             }
