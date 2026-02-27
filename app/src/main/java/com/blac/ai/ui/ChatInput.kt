@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -118,9 +119,9 @@ fun ChatInput(
                             Box(modifier = Modifier.weight(1f)) {
                                 if (text.isEmpty()) {
                                     Text(
-                                        text = if (isRecording) 
-                                            "Listening..." 
-                                        else 
+                                        text = if (isRecording)
+                                            "Listening..."
+                                        else
                                             "Type a message...",
                                         style = LocalTextStyle.current.copy(
                                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
@@ -270,9 +271,9 @@ private fun VoiceButton(
     FloatingActionButton(
         onClick = onToggleRecording,
         modifier = Modifier.size(48.dp),
-        containerColor = if (isRecording) 
-            MaterialTheme.colorScheme.error 
-        else 
+        containerColor = if (isRecording)
+            MaterialTheme.colorScheme.error
+        else
             MaterialTheme.colorScheme.surfaceVariant,
         shape = CircleShape,
         elevation = FloatingActionButtonDefaults.elevation(2.dp)
@@ -317,7 +318,7 @@ private fun AttachmentPreviewRow(
                 color = MaterialTheme.colorScheme.primary
             )
         }
-        
+
         IconButton(onClick = onRemoveAll) {
             Icon(
                 Icons.Default.Close,
