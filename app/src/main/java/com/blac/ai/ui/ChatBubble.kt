@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.blac.ai.data.Attachment
@@ -204,14 +205,13 @@ private fun CodeContent(code: String, language: String) {
                 }
             }
 
-            // Use BasicText to support SpannableString
-            BasicText(
+            Text(
                 text = highlightedText,
-                style = LocalTextStyle.current.copy(
-                    fontSize = 13.sp,
-                    fontFamily = FontFamily.Monospace,
-                    color = Color(0xFFD4D4D4)
-                ),
+                fontSize = 13.sp,
+                fontFamily = FontFamily.Monospace,
+                color = Color(0xFFD4D4D4),
+                maxLines = if (highlightedText.length > 500) 20 else Int.MAX_VALUE,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp)
