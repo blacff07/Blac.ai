@@ -11,13 +11,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.blac.ai.data.Attachment
 import com.blac.ai.data.ChatMessage
 import com.blac.ai.utils.CodeHighlighter
 import java.text.SimpleDateFormat
@@ -31,11 +32,9 @@ fun ChatBubble(
     onShare: (String) -> Unit
 ) {
     val isUser = message.isUser
-    val context = LocalContext.current
     var isExpanded by remember { mutableStateOf(false) }
     var showActions by remember { mutableStateOf(false) }
 
-    // Animation for new messages
     val enterTransition = remember {
         slideInVertically(
             initialOffsetY = { it / 2 },
@@ -52,7 +51,6 @@ fun ChatBubble(
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp, vertical = 4.dp)
         ) {
-            // Show timestamp for first message or when expanded
             if (isExpanded) {
                 Text(
                     text = SimpleDateFormat("HH:mm, MMM d", Locale.getDefault())
@@ -107,7 +105,6 @@ fun ChatBubble(
                             .fillMaxWidth()
                             .padding(12.dp)
                     ) {
-                        // Message content
                         if (message.isCode) {
                             CodeContent(
                                 code = message.content,
@@ -125,7 +122,6 @@ fun ChatBubble(
                             )
                         }
 
-                        // Action buttons (shown when expanded)
                         AnimatedVisibility(visible = showActions) {
                             Row(
                                 modifier = Modifier
@@ -158,7 +154,6 @@ fun ChatBubble(
                             }
                         }
 
-                        // Attachment preview
                         if (message.attachments.isNotEmpty()) {
                             AttachmentPreview(
                                 attachments = message.attachments,
@@ -185,7 +180,6 @@ private fun CodeContent(code: String, language: String) {
         modifier = Modifier.fillMaxWidth()
     ) {
         Column {
-            // Language label
             if (language.isNotBlank()) {
                 Row(
                     modifier = Modifier
