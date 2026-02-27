@@ -1,15 +1,12 @@
 package com.blac.ai.ui
 
-import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,7 +36,6 @@ fun ChatScreen(
     val coroutineScope = rememberCoroutineScope()
     val clipboardManager = LocalClipboardManager.current
 
-    // Auto-scroll to bottom when new messages arrive
     LaunchedEffect(messages.size) {
         if (messages.isNotEmpty()) {
             listState.animateScrollToItem(0)
@@ -65,24 +61,15 @@ fun ChatScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = { /* Open drawer */ }) {
-                        Icon(
-                            Icons.Default.Menu,
-                            contentDescription = "Menu"
-                        )
+                        Icon(Icons.Default.Menu, contentDescription = "Menu")
                     }
                 },
                 actions = {
                     IconButton(onClick = { navController.navigate("settings") }) {
-                        Icon(
-                            Icons.Default.Settings,
-                            contentDescription = "Settings"
-                        )
+                        Icon(Icons.Default.Settings, contentDescription = "Settings")
                     }
                     IconButton(onClick = { /* More options */ }) {
-                        Icon(
-                            Icons.Default.MoreVert,
-                            contentDescription = "More"
-                        )
+                        Icon(Icons.Default.MoreVert, contentDescription = "More")
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -109,7 +96,6 @@ fun ChatScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            // Background gradient
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -150,14 +136,12 @@ fun ChatScreen(
                         )
                     }
 
-                    // Loading indicator
                     if (isLoading) {
                         item {
                             LoadingIndicator()
                         }
                     }
 
-                    // Welcome message for empty chat
                     if (messages.isEmpty()) {
                         item {
                             WelcomeMessage()
@@ -214,19 +198,16 @@ private fun WelcomeMessage() {
         )
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Quick action chips
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             AssistChip(
                 onClick = { /* Start coding */ },
-                label = { Text("💻 Start Coding") },
-                modifier = Modifier.wrapContentWidth()
+                label = { Text("💻 Start Coding") }
             )
             AssistChip(
                 onClick = { /* Upload file */ },
-                label = { Text("📁 Upload File") },
-                modifier = Modifier.wrapContentWidth()
+                label = { Text("📁 Upload File") }
             )
         }
     }
