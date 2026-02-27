@@ -19,6 +19,8 @@ import org.vosk.Model
 import org.vosk.Recognizer
 import org.json.JSONObject
 import java.io.File
+import java.io.FileOutputStream
+import java.util.zip.ZipFile
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
@@ -68,7 +70,7 @@ class VoiceManager(private val context: Context) {
         downloadId = downloadManager.enqueue(request)
         _isDownloading.value = true
 
-        // Register receiver to listen for download completion
+        // Register receiver for completion
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
@@ -80,7 +82,7 @@ class VoiceManager(private val context: Context) {
         }
         ContextCompat.registerReceiver(context, receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE), ContextCompat.RECEIVER_NOT_EXPORTED)
 
-        // Start a periodic checker for progress
+        // Poll progress
         Thread {
             while (_isDownloading.value) {
                 queryDownloadStatus()
@@ -111,16 +113,36 @@ class VoiceManager(private val context: Context) {
     }
 
     private fun extractModel() {
-        // For simplicity, assume the file is already extracted.
-        // In a real app, you'd unzip the downloaded file.
-        // For now, we'll just check for extracted directory.
-        val modelDir = File(context.filesDir, MODEL_DIR)
-        if (modelDir.exists()) {
+        try {
+            val zipFile = File(context.getExternalFilesDir(null), MODEL_FILENAME)
+            if (!zipFile.exists()) return
+
+            val destinationDir = File(context.filesDir, MODEL_DIR)
+            if (destinationDir.exists()) {
+                destinationDir.deleteRecursively()
+            }
+            destinationDir.mkdirs()
+
+            ZipFile(zipFile).use { zip ->
+                zip.entries().asSequence().forEach { entry ->
+                    val targetFile = File(destinationDir, entry.name)
+                    if (entry.isDirectory) {
+                        targetFile.mkdirs()
+                    } else {
+                        targetFile.parentFile?.mkdirs()
+                        zip.getInputStream(entry).use { input ->
+                            FileOutputStream(targetFile).use { output ->
+                                input.copyTo(output)
+                            }
+                        }
+                    }
+                }
+            }
+            zipFile.delete()
             _isModelReady.value = true
-        } else {
-            // Actually unzip (requires ZipFile or similar) – omitted for brevity
-            // You can use Android's ZipFile or a library.
-            // Assume extraction happens.
+        } catch (e: Exception) {
+            e.printStackTrace()
+            _isModelReady.value = false
         }
     }
 
