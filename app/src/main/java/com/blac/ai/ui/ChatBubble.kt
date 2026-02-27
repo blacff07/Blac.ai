@@ -204,11 +204,14 @@ private fun CodeContent(code: String, language: String) {
                 }
             }
 
-            Text(
+            // Use BasicText to support SpannableString
+            BasicText(
                 text = highlightedText,
-                fontSize = 13.sp,
-                fontFamily = FontFamily.Monospace,
-                color = Color(0xFFD4D4D4),
+                style = LocalTextStyle.current.copy(
+                    fontSize = 13.sp,
+                    fontFamily = FontFamily.Monospace,
+                    color = Color(0xFFD4D4D4)
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp)
