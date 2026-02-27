@@ -13,7 +13,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -30,25 +29,47 @@ android {
             isMinifyEnabled = false
         }
     }
-    
+
+    // Generate smaller APKs per architecture
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+            isUniversalApk = true // for emulators
+        }
+    }
+
+    // Exclude unnecessary native libraries from APK (Vosk model should be downloaded)
+    packagingOptions {
+        resources {
+            excludes += listOf(
+                "lib/armeabi-v7a/libvosk.so",
+                "lib/arm64-v8a/libvosk.so",
+                "lib/x86/libvosk.so",
+                "lib/x86_64/libvosk.so"
+            )
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    
+
     kotlinOptions {
         jvmTarget = "17"
     }
-    
+
     buildFeatures {
         compose = true
         buildConfig = true
     }
-    
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.11"
     }
-    
+
     configurations.all {
         resolutionStrategy {
             force("org.jetbrains:annotations:23.0.0")
@@ -65,8 +86,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
-    
-    // Compose BOM and libraries
+
+    // Compose BOM and libraries (use BOM for version consistency)
     implementation(platform("androidx.compose:compose-bom:2024.04.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -78,15 +99,13 @@ dependencies {
     // Gemini API
     implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
 
-    // ML Kit OCR
+    // ML Kit OCR (lightweight)
     implementation("com.google.mlkit:text-recognition:16.0.1")
 
-    // Vosk offline voice
-    implementation("com.alphacephei:vosk-android:0.3.47")
-
-    // 🔴 TEMPORARILY REMOVED - Prism4j syntax highlighting
-    // Will be re-added after build is stable
-    // implementation("io.noties:prism4j-bundler:2.0.0")
+    // Vosk offline voice (exclude native libs – will download model at runtime)
+    implementation("com.alphacephei:vosk-android:0.3.47") {
+        exclude(group = "net.java.dev.jna")
+    }
 
     // OkHttp for networking
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
@@ -96,6 +115,12 @@ dependencies {
 
     // Encrypted SharedPreferences
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
+
+    // System UI controller (for status bar)
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.35.0-alpha")
+
+    // No Prism4j – syntax highlighting temporarily disabled for size/performance
+    // We'll use a simple monospaced font instead
 
     // Testing
     testImplementation("junit:junit:4.13.2")
