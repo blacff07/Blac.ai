@@ -78,7 +78,7 @@ android {
         }
         exclude(group = "org.jetbrains", module = "annotations-java5")
         exclude(group = "com.google.guava", module = "listenablefuture")
-        exclude(group = "net.java.dev.jna", module = "jna") // Prevent duplicate JNA
+        // Do NOT exclude jna globally; we need it for Vosk
     }
 }
 
@@ -104,7 +104,7 @@ dependencies {
     // ML Kit OCR
     implementation("com.google.mlkit:text-recognition:16.0.1")
 
-    // Vosk offline voice - exclude embedded JNA to avoid duplicates
+    // Vosk offline voice - exclude its embedded JNA to avoid duplicates
     implementation("com.alphacephei:vosk-android:0.3.47") {
         exclude(group = "net.java.dev.jna")
     }
