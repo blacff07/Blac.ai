@@ -36,12 +36,12 @@ android {
             isEnable = true
             reset()
             include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
-            isUniversalApk = true // for emulators
+            isUniversalApk = true
         }
     }
 
     // Exclude unnecessary native libraries from APK (Vosk model should be downloaded)
-    packagingOptions {
+    packaging {
         resources {
             excludes += listOf(
                 "lib/armeabi-v7a/libvosk.so",
@@ -74,9 +74,11 @@ android {
         resolutionStrategy {
             force("org.jetbrains:annotations:23.0.0")
             force("com.google.guava:guava:32.0.1-android")
+            force("net.java.dev.jna:jna:5.14.0")
         }
         exclude(group = "org.jetbrains", module = "annotations-java5")
         exclude(group = "com.google.guava", module = "listenablefuture")
+        exclude(group = "net.java.dev.jna", module = "jna") // Prevent duplicate JNA
     }
 }
 
@@ -87,7 +89,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
 
-    // Compose BOM and libraries (use BOM for version consistency)
+    // Compose BOM and libraries
     implementation(platform("androidx.compose:compose-bom:2024.04.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -99,12 +101,15 @@ dependencies {
     // Gemini API
     implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
 
-    // ML Kit OCR (lightweight)
+    // ML Kit OCR
     implementation("com.google.mlkit:text-recognition:16.0.1")
 
-    // Vosk offline voice
-    implementation("com.alphacephei:vosk-android:0.3.47")
-    // Add JNA for Vosk native support
+    // Vosk offline voice - exclude embedded JNA to avoid duplicates
+    implementation("com.alphacephei:vosk-android:0.3.47") {
+        exclude(group = "net.java.dev.jna")
+    }
+
+    // Add JNA separately (required for Vosk)
     implementation("net.java.dev.jna:jna:5.14.0")
 
     // OkHttp for networking
@@ -118,9 +123,6 @@ dependencies {
 
     // System UI controller (for status bar)
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.35.0-alpha")
-
-    // No Prism4j – syntax highlighting temporarily disabled for size/performance
-    // We'll use a simple monospaced font instead
 
     // Testing
     testImplementation("junit:junit:4.13.2")
