@@ -205,13 +205,14 @@ private fun CodeContent(code: String, language: String) {
                 }
             }
 
-            Text(
+            // Use BasicText to properly display SpannableString
+            BasicText(
                 text = highlightedText,
-                fontSize = 13.sp,
-                fontFamily = FontFamily.Monospace,
-                color = Color(0xFFD4D4D4),
-                maxLines = if (highlightedText.length > 500) 20 else Int.MAX_VALUE,
-                overflow = TextOverflow.Ellipsis,
+                style = LocalTextStyle.current.copy(
+                    fontSize = 13.sp,
+                    fontFamily = FontFamily.Monospace,
+                    color = Color(0xFFD4D4D4)
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp)
