@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalTextStyle  // ✅ ADD THIS IMPORT
+import androidx.compose.ui.platform.LocalTextStyle  // ✅ MUST BE HERE
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -206,6 +206,7 @@ private fun CodeContent(code: String, language: String) {
                 }
             }
 
+            // ✅ CORRECT BasicText usage
             BasicText(
                 text = highlightedText,
                 style = LocalTextStyle.current.copy(
