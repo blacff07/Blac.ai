@@ -96,6 +96,7 @@ fun ChatScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            // Background gradient
             Box(
                 modifier = Modifier
                     .fillMaxSize()
