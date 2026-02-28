@@ -1,72 +1,211 @@
-# Blac.ai – Lightweight AI Assistant for Android
+# 🚀 Blac.ai – Lightweight AI Assistant for Android
 
-**Blac.ai** is a free, open‑source AI assistant that runs on devices with as little as 1.5 GB RAM. It combines the power of Google's Gemini API with on‑device OCR and offline voice recognition – all in a sleek, dark‑themed Material 3 interface.
+<p align="center">
+  <b>A fast, privacy-first AI assistant designed for low-RAM Android devices.</b><br>
+  Powered by Google Gemini + On-Device AI
+</p>
 
-## Features
+<p align="center">
+  <img src="https://img.shields.io/badge/Platform-Android-green?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Min%20RAM-1.5GB-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Material%203-Dark%20Theme-black?style=for-the-badge" />
+</p>
 
-- 💬 **Chat & Coding** – Powered by Gemini 1.5 Flash, with specialised coding prompts.
-- 📁 **File Upload** – Upload images, PDFs, and documents (OCR via ML Kit).
-- 🖼️ **Multi‑Image OCR** – Extract text from several images at once and merge intelligently.
-- 🎤 **Offline Voice Input** – Uses Vosk; model downloaded on first use.
-- 📝 **Code Highlighting** – Syntax highlighting for Kotlin, Python, JavaScript, etc.
-- ⚙️ **Toggleable Modes** – Think mode (reasoning), Search mode (real‑time web), Code mode.
-- 🔐 **Privacy‑First** – Optional user‑provided API key; no data leaves device unless you choose.
-- 🌙 **Material 3 Dark Theme** – Clean, professional, easy on the eyes.
-- 📦 **Lightweight** – APK < 15 MB, runs on devices with 1.5 GB RAM.
+---
 
-## Screenshots
+## 📱 Overview
 
-*(Add your own screenshots here)*
+**Blac.ai** is a free, open-source AI assistant built specifically for Android devices with as little as **1.5 GB RAM**.
 
-## Getting Started
+It combines:
 
-### Prerequisites
+- ⚡ Google Gemini API (Gemini 1.5 Flash)
+- 🧠 On-device OCR (ML Kit)
+- 🎙️ Offline speech recognition (Vosk)
+- 🎨 Material 3 dark UI
 
-- Android 7.0 (API 24) or higher.
-- A Gemini API key from [Google AI Studio](https://aistudio.google.com/) (optional – a built‑in demo key is included but rate‑limited).
+All packaged in a lightweight APK under **15 MB**.
 
-### Installation
+---
 
-1. Download the latest APK from the [Releases](https://github.com/yourusername/Blac.ai/releases) page.
-2. Install on your device (you may need to enable “Install from unknown sources”).
-3. Open the app and start chatting!
+## ✨ Features
 
-### Building from Source
+### 💬 Smart Chat & Coding
+- Powered by **Gemini 1.5 Flash**
+- Specialised coding prompts
+- Think Mode (reasoning support)
+- Code Mode (optimized for programming)
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/Blac.ai.git
+### 📁 File & OCR Support
+- Upload images, PDFs, and documents
+- Multi-image OCR with intelligent text merging
+- ML Kit text extraction
+
+### 🎤 Offline Voice Input
+- Fully offline voice recognition using **Vosk**
+- Model auto-downloads on first use
+- No internet required for speech input
+
+### 📝 Code Highlighting
+- Kotlin
+- Python
+- JavaScript
+- And more (via Prism4j)
+
+### ⚙️ Toggleable Modes
+- 🧠 Think Mode
+- 🔎 Search Mode (real-time web queries)
+- 💻 Code Mode
+
+### 🔐 Privacy First
+- Optional user-provided API key
+- No forced data collection
+- No data leaves device without consent
+
+### 🌙 Modern UI
+- Material 3 design
+- Dark theme optimized
+- Clean & distraction-free interface
+
+### 📦 Lightweight
+- APK size: < 15 MB
+- Runs smoothly on 1.5 GB RAM devices
+- Optimized memory footprint
+
+---
+
+## 📸 Screenshots
+
+> *(Add your screenshots here)*
+
+Example:
+
+```
+![Chat Screen](screenshots/chat.png)
+![OCR Mode](screenshots/ocr.png)
 ```
 
-1. Open the project in Android Studio (or build via command line).
-2. Add your Gemini API key to local.properties:
-   ```
-   GEMINI_API_KEY=your_key_here
-   ```
-3. Build the APK:
-   ```bash
-   ./gradlew assembleDebug
-   ```
-   The APK will be at app/build/outputs/apk/debug/.
+---
 
-GitHub Actions
+## 🚀 Getting Started
 
-This repository includes a workflow that automatically builds the APK on every push to the main branch. Go to the Actions tab, select the latest workflow, and download the artifact.
+### 📋 Prerequisites
 
-Contributing
+- Android 7.0 (API 24) or higher
+- Gemini API key from:
+  https://aistudio.google.com/
 
-Contributions are welcome! Please open an issue or submit a pull request.
+> ⚠ A built-in demo key is included but rate-limited.
 
-License
+---
 
-This project is licensed under the MIT License – see the LICENSE file for details.
+## 📦 Installation
 
-Acknowledgements
+### Option 1 – Install APK
 
-· Google Gemini API
-· ML Kit Text Recognition
-· Vosk Speech Recognition
-· Prism4j for syntax highlighting
-· Jetpack Compose for the UI
+1. Download the latest APK from:
+   https://github.com/yourusername/Blac.ai/releases
+2. Enable **Install from Unknown Sources**
+3. Install and open the app
+4. Start chatting 🚀
+
+---
+
+## 🛠 Building From Source
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/yourusername/Blac.ai.git
+cd Blac.ai
+```
+
+### 2️⃣ Open in Android Studio  
+OR build via terminal.
+
+### 3️⃣ Add API Key
+
+Add to `local.properties`:
 
 ```
+GEMINI_API_KEY=your_key_here
+```
+
+### 4️⃣ Build Debug APK
+
+```bash
+./gradlew assembleDebug
+```
+
+APK location:
+
+```
+app/build/outputs/apk/debug/
+```
+
+---
+
+## 🤖 GitHub Actions (CI)
+
+This repository includes an automated GitHub Actions workflow.
+
+- Automatically builds APK on push to `main`
+- Download build artifact from **Actions → Latest Workflow**
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repo
+2. Create a feature branch
+3. Submit a Pull Request
+
+Or open an issue for suggestions/bugs.
+
+---
+
+## 🏗 Tech Stack
+
+- Google Gemini API
+- ML Kit Text Recognition
+- Vosk Speech Recognition
+- Prism4j (Syntax Highlighting)
+- Jetpack Compose
+- Material 3
+
+---
+
+## 🔐 Security & Privacy
+
+Blac.ai follows a privacy-first philosophy:
+
+- No tracking
+- No analytics
+- No forced cloud sync
+- Fully offline speech recognition
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.  
+See `LICENSE` for details.
+
+---
+
+## 🙏 Acknowledgements
+
+- Google Gemini API  
+- ML Kit Text Recognition  
+- Vosk Speech Recognition  
+- Prism4j  
+- Jetpack Compose  
+
+---
+
+<p align="center">
+  Made with ❤️ for lightweight Android devices
+</p>
